@@ -1,17 +1,29 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container-fluid">
+     <div class="row">
+            <div class="col-md-3">
+                <main-nav params="route: route"></main-nav>
+            </div>
+            <div class="col-sm-9">
+                <router-view></router-view>
+            </div>
+            <div class="col-12">
+                <music-player></music-player>
+            </div>
+        </div>
   </div>
 </template>
 
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MainNav from './components/MainNav.vue'
+import MusicPlayer from './components/MusicPlayer.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    MainNav,
+    MusicPlayer
   }
 }
 </script>
