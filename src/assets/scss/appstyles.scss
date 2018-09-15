@@ -325,19 +325,19 @@ div#timeline {
 	margin: 0 auto;
 	width: 92.5%;
 	margin-top: 15px;
-	span {
-		color: darken(white, 30%);
-		font-size: 7px;
-		position: absolute;
-		top: -10px;
+	// span {
+	// 	color: darken(white, 30%);
+	// 	font-size: 7px;
+	// 	position: absolute;
+	// 	top: -10px;
 		
-		&#current-time {
-			left: 0;
-		}
-		&#total-time {
-			right: 0;
-		}
-	}
+	// 	&#current-time {
+	// 		left: 0;
+	// 	}
+	// 	&#total-time {
+	// 		right: 0;
+	// 	}
+	// }
 	
 	div.slider {
 		background-color: darken(white, 50%);
