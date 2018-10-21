@@ -16,21 +16,21 @@
 
 
 <script>
-import MainNav from './components/MainNav.vue'
-import MusicPlayer from './components/MusicPlayer.vue'
+import MainNav from "./components/MainNav.vue";
+import MusicPlayer from "./components/MusicPlayer.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     MainNav,
     MusicPlayer
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
