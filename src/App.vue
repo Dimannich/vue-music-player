@@ -1,15 +1,15 @@
 <template>
   <div id="app" class="container-fluid">
-     <div class="row">
-            <div class="col-md-3">
-                <main-nav params="route: route"></main-nav>
+     <div class="align-items-end wrapper">
+                <!-- <main-nav params="route: route"></main-nav> -->
+            <side-bar></side-bar>
+            <div class="main-panel" style="background-color: transparent;">
+               <router-view></router-view>
             </div>
-            <div class="col-sm-9">
+            <!-- <div class="col-sm-9">
                 <router-view></router-view>
-            </div>
-            <div class="col-12">
-                <music-player></music-player>
-            </div>
+            </div> -->
+            <music-player></music-player>
         </div>
   </div>
 </template>

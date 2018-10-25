@@ -531,5 +531,9 @@ $main-select-color: #00bfa5;
     }
   }
 }
+
+.player {
+  box-shadow: 0px 8px 10px -4px rgba(0, 0, 0, 0.56), 0 -4px 20px 0 rgba(0, 0, 0, 0.12), 0 -2px 10px -5px rgba(0, 0, 0, 0.2);
+}
 </style>
 

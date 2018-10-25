@@ -10,11 +10,15 @@ import { faStepBackward, faPlus, faPlay, faStepForward, faVolumeUp, faVolumeDown
 import { faPlayCircle, faPauseCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import store from './store'
+import SideBar from './components/test'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
 
 library.add(faStepBackward, faPlayCircle, faPauseCircle, faHeart, faPlus, faPlay, faStepForward, faVolumeUp, faVolumeDown, faVolumeOff, faSyncAlt, faRandom, faPause, faGripVertical)
 
 Vue.component('fa-icon', FontAwesomeIcon)
-
+Vue.use(SideBar)
+Vue.use(VueMaterial)
 Vue.config.productionTip = false
 
 new Vue({

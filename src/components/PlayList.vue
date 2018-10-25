@@ -3,7 +3,7 @@
       <slick-list @mouseout="handleOut" helperClass="draggable-item--moved" :useDragHandle="true" v-model="items" class="mt-5" lockAxis="y" @input="handleMove(false)" @sort-start="handleMove(true)">
         <slick-item v-for="(item, index) in items" :index="index" :key="index">
           <div class="draggable-item d-flex">
-            <div :class="{'draggable-item__handle--hover': !disableMouseOver}" @mouseover="handleOver" v-handle class="draggable-item__handle h-100 d-flex justify-content-center align-items-center">
+            <div :class="{'draggable-item__handle--hover': !disableMouseOver}" @mouseout="handleOut" @mouseover="handleOver" v-handle class="draggable-item__handle h-100 d-flex justify-content-center align-items-center">
                 <fa-icon icon="grip-vertical"></fa-icon>
             </div>
             <play-list-item :disableMouseOver="disableMouseOver" :song="item" :active="item.id === 1 ? true : false"></play-list-item>
