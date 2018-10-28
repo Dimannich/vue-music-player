@@ -13,12 +13,10 @@
         class="nav-link"
         :target="link.target"
         :href="link.path"
-        :style="{color: hover ? activeColor : color}"
+        :style="{color: hover || isActive ? activeColor : color}"
         @mouseover.native="isHover(true)"
-        @mouseout.native="isHover(false)"
-       >
-          <!-- <md-icon>{{link.icon}}</md-icon> -->
-          <fa-icon style="float: left"  icon="pause"></fa-icon>
+        @mouseout.native="isHover(false)">
+          <fa-icon class="link-icon" :icon="link.icon"></fa-icon>
           <p>{{link.name}}</p>
       </component>
     </slot>
@@ -104,5 +102,18 @@ export default {
 <style>
 .nav-link {
   cursor: pointer;
+}
+
+.link-icon {
+    height: 20px;
+    margin-right: 15px!important;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 6px;
+}
+
+.off-canvas-sidebar .nav li a, .sidebar .nav li a {
+  display: flex;
+  align-items: center;
 }
 </style>

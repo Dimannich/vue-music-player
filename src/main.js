@@ -6,19 +6,17 @@ import App from './App.vue'
 import router from './router'
 import './assets/scss/appstyles.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStepBackward, faPlus, faPlay, faStepForward, faVolumeUp, faVolumeDown, faVolumeOff, faSyncAlt, faRandom, faPause, faGripVertical, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faStepBackward, faPlus, faPlay, faStepForward, faVolumeUp, faVolumeDown, faVolumeOff, faSyncAlt, faRandom, faPause, faGripVertical, faHeart, faFire, faTable, faSearch, faTh, faCog, faSignOutAlt, faEllipsisV, faThList } from '@fortawesome/free-solid-svg-icons'
 import { faPlayCircle, faPauseCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import store from './store'
 import SideBar from './components/test'
-import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 
-library.add(faStepBackward, faPlayCircle, faPauseCircle, faHeart, faPlus, faPlay, faStepForward, faVolumeUp, faVolumeDown, faVolumeOff, faSyncAlt, faRandom, faPause, faGripVertical)
+library.add(faThList, faEllipsisV, faSignOutAlt, faCog, faFire, faTh, faSearch, faStepBackward, faPlayCircle, faPauseCircle, faHeart, faPlus, faPlay, faStepForward, faVolumeUp, faVolumeDown, faVolumeOff, faSyncAlt, faRandom, faPause, faGripVertical)
 
 Vue.component('fa-icon', FontAwesomeIcon)
 Vue.use(SideBar)
-Vue.use(VueMaterial)
 Vue.config.productionTip = false
 
 new Vue({

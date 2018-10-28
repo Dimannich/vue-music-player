@@ -10,14 +10,18 @@
         {{title}}
       </a>
       <div class="navbar-minimize">
-        <md-button class="md-round md-just-icon md-transparent" @click="minimizeSidebar">
-          <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
-          <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
-        </md-button>
+        <button class="md-button md-round md-just-icon md-transparent md-theme-default" @click="minimizeSidebar">
+          <div class="md-ripple">
+            <div class="md-button-content">
+              <fa-icon icon="ellipsis-v" class="visible-on-sidebar-regular"></fa-icon>
+              <fa-icon icon="th-list" class="visible-on-sidebar-mini"></fa-icon>
+            </div>
+          </div>
+        </button>
       </div>
     </div>
-    <div class="sidebar-wrapper d-flex flex-column">
-      <ul class="pl-0">
+    <div class="sidebar-wrapper text-left">
+      <ul class="pl-0 md-list nav">
         <slot name="general">
           <sidebar-item v-for="(link, index) in sidebarLinks"
                         :key="link.name + index"
@@ -30,9 +34,18 @@
 
         </slot>
       </ul>
-      <ul class="mt-auto pl-0">
+      <ul class="md-list nav pl-0">
         <slot name="profile">
-          <sidebar-item v-for="(link, index) in sidebarLinks"
+          <div class="delimetr"></div>
+          <div class="user">
+            <div class="photo">
+              <img :src="logo" alt="avatar">
+            </div>
+            <div class="user-info">
+                profile
+            </div>
+          </div>
+          <sidebar-item v-for="(link, index) in profileLinks"
                         :key="link.name + index"
                         :link="link">
           </sidebar-item>
@@ -42,7 +55,7 @@
   </div>
 </template>
 <script>
-import logo from '@/assets/img/test-logo.png'
+import logo from "@/assets/img/test-logo.png";
 
 export default {
   name: "sidebar",
@@ -68,13 +81,33 @@ export default {
       default: () => [
         {
           path: "/fetch-data",
-          name: "test",
-          icon: "assignment",
+          name: "Поиск",
+          icon: "search"
         },
         {
-          path: '/',
-          name: 'News',
-          icon: 'replay'
+          path: "/",
+          name: "My music",
+          icon: "th"
+        },
+        {
+          path: "/123",
+          name: "News",
+          icon: "fire"
+        }
+      ]
+    },
+    profileLinks: {
+      type: Array,
+      default: () => [
+        {
+          path: "/settings",
+          name: "Настройки",
+          icon: "cog"
+        },
+        {
+          path: "/logout",
+          name: "Выйти",
+          icon: "sign-out-alt"
         }
       ]
     }
@@ -113,5 +146,132 @@ export default {
   .sidebar-mini .sidebar {
     z-index: 1020;
   }
+
+  .delimetr {
+    display: block;
+    margin: 0;
+    padding-bottom: 1rem;
+    position: relative;
+    z-index: 4;
+    &::before {
+      background-color: rgba(180, 180, 180, 0.3);
+      top: 0;
+      content: "";
+      height: 1px;
+      position: absolute;
+      right: 15px;
+      width: calc(100% - 30px);
+    }
+  }
+
+  .sidebar-mini .sidebar .user .user-info {
+    -webkit-transform: translate3d(-25px, 0, 0);
+    opacity: 0;
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  .sidebar-mini .sidebar:hover .user .user-info {
+    -webkit-transform: translateZ(0);
+    opacity: 1;
+    transform: translateZ(0);
+  }
+
+  .sidebar-mini .sidebar-wrapper {
+    overflow-x: hidden;
+  }
+
+  .sidebar .user {
+    margin: 0;
+    padding-bottom: 10px;
+
+    &::after {
+      content: unset;
+    }
+  }
+
+  .sidebar .user .user-info {
+    display: block;
+    opacity: 1;
+    position: relative;
+    color: white;
+    white-space: nowrap;
+    padding: 0.5rem 15px;
+    transition: all 0.3s linear;
+  }
+
+  .md-button,
+  .md-button-clean {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    line-height: normal;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  .md-button {
+    min-width: 88px;
+    height: 36px;
+    margin: 6px 8px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    -webkit-box-shadow: none;
+    background-color: transparent !important;
+    box-shadow: none;
+    border-radius: 30px;
+    font-size: 24px;
+    height: 41px;
+    line-height: 41px;
+    min-width: 41px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 41px;
+  }
+
+  .md-ripple {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 5;
+    overflow: hidden;
+    -webkit-mask-image: radial-gradient(circle, #fff 100%, #000 0);
+  }
+
+  .md-button .md-ripple {
+    padding: 0 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .md-button-content {
+    position: relative;
+    z-index: 2;
+}
+
+.md-button .md-button-content {
+    -ms-flex-align: center;
+    -webkit-box-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
 }
 </style>
