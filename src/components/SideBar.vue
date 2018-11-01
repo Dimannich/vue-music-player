@@ -3,7 +3,7 @@
     <div class="logo">
       <a href="#" class="simple-text logo-mini" target="_blank">
         <div class="logo-img">
-          <img :src="logo">
+          <img :src="logo" alt="logo">
         </div>
       </a>
       <a href="#" class="simple-text logo-normal text-left" target="_blank">
@@ -28,13 +28,12 @@
                         :link="link">
           </sidebar-item>
         </slot>
-      </ul>
-      <ul>
         <slot name="songs">
-
+          <sidebar-song v-for="(song, index) in recentlyPlayed"
+                        :key="song.name + index"
+                        :song="song">
+          </sidebar-song>
         </slot>
-      </ul>
-      <ul class="md-list nav pl-0">
         <slot name="profile">
           <div class="delimetr"></div>
           <div class="user">
@@ -108,6 +107,21 @@ export default {
           path: "/logout",
           name: "Выйти",
           icon: "sign-out-alt"
+        }
+      ]
+    },
+    recentlyPlayed: {
+      type: Array,
+      default: () => [
+        {
+          name: "",
+          playlist: "",
+          cover: logo
+        },
+        {
+          name: "",
+          playlist: "",
+          cover: logo
         }
       ]
     }
@@ -263,15 +277,15 @@ export default {
   .md-button-content {
     position: relative;
     z-index: 2;
-}
+  }
 
-.md-button .md-button-content {
+  .md-button .md-button-content {
     -ms-flex-align: center;
     -webkit-box-align: center;
     align-items: center;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-}
+  }
 }
 </style>

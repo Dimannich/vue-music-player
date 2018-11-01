@@ -1,5 +1,6 @@
 import Sidebar from './SideBar.vue'
 import SidebarItem from './SideBarItem.vue'
+import SidebarSong from './SideBarSong.vue'
 
 const SidebarStore = {
   showSidebar: false,
@@ -10,15 +11,13 @@ const SidebarStore = {
   },
   toggleMinimize () {
     document.body.classList.toggle('sidebar-mini');
-    // we simulate the window Resize so the charts will get updated in realtime.
-    const simulateWindowResize = setInterval(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 180);
+    // const simulateWindowResize = setInterval(() => {
+    //   window.dispatchEvent(new Event('resize'))
+    // }, 180);
 
-    // we stop the simulation of Window Resize after the animations are completed
-    setTimeout(() => {
-      clearInterval(simulateWindowResize)
-    }, 1000);
+    // setTimeout(() => {
+    //   clearInterval(simulateWindowResize)
+    // }, 1000);
 
     this.isMinimized = !this.isMinimized
   }
@@ -44,7 +43,8 @@ const SidebarPlugin = {
       }
     });
     Vue.component('side-bar', Sidebar);
-    Vue.component('sidebar-item', SidebarItem)
+    Vue.component('sidebar-item', SidebarItem);
+    Vue.component('sidebar-song', SidebarSong);
   }
 };
 
