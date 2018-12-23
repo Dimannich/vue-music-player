@@ -1,51 +1,62 @@
 <template>
-    <div :class="{'song--moved': disableMouseOver}" class="d-flex align-items-center song flex-fill" @mouseover="updateState(true)" @mouseout="updateState(false)">
-        <div class="d-flex justify-content-center align-items-center song__img">
-            <img class="img-fluid" src="../../assets/img/music65.png" />
-            <fa-icon class="song__play-icon" :class="{'song__pause-icon--active': !active && hover && !disableMouseOver}" :icon="['far', 'play-circle']"></fa-icon>
-            <fa-icon class="song__pause-icon" :class="{'song__pause-icon--active': active && hover && !disableMouseOver}" :icon="['far', 'pause-circle']"></fa-icon>
-            <div class="song__playing" :class="{'song__playing--active': active && !hover}"></div>
-        </div>
-        <div class="col align-items-start d-flex flex-column">
-            <span class="song__name" :class="{'song__name--active': active}">Song name {{ song.id }}</span>
-            <span class="song__artist">Song artist</span>
-        </div>
-        <div class="song__controls">
-            <span class="song__add">
-                <fa-icon icon="plus"></fa-icon>
-            </span>
-            <span class="song__fav">
-                <fa-icon icon="heart"></fa-icon>
-            </span>             
-        </div>
-        <span class="mr-3 song__time">time</span>       
+  <div
+    :class="{'song--moved': disableMouseOver}"
+    class="d-flex align-items-center song flex-fill"
+    @mouseover="updateState(true)"
+    @mouseout="updateState(false)"
+  >
+    <div class="d-flex justify-content-center align-items-center song__img">
+      <img class="img-fluid" src="../../assets/img/music65.png">
+      <fa-icon
+        class="song__play-icon"
+        :class="{'song__pause-icon--active': !active && hover && !disableMouseOver}"
+        :icon="['far', 'play-circle']"
+      ></fa-icon>
+      <fa-icon
+        class="song__pause-icon"
+        :class="{'song__pause-icon--active': active && hover && !disableMouseOver}"
+        :icon="['far', 'pause-circle']"
+      ></fa-icon>
+      <div class="song__playing" :class="{'song__playing--active': active && !hover}"></div>
     </div>
+    <div class="col align-items-start d-flex flex-column">
+      <span class="song__name" :class="{'song__name--active': active}">Song name {{ song.id }}</span>
+      <span class="song__artist">Song artist</span>
+    </div>
+    <div class="song__controls">
+      <span class="song__add">
+        <fa-icon icon="plus"></fa-icon>
+      </span>
+      <span class="song__fav">
+        <fa-icon icon="heart"></fa-icon>
+      </span>
+    </div>
+    <span class="mr-3 song__time">time</span>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "PlayListItem",
+  name: 'PlayListItem',
   props: {
     active: false,
     song: Object,
-    disableMouseOver: Boolean
+    disableMouseOver: Boolean,
   },
 
   data() {
     return {
-      hover: false
+      hover: false,
     };
   },
-  
-  computed: {
 
-  },
+  computed: {},
 
   methods: {
     updateState(isHover) {
       this.hover = isHover;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -76,7 +87,7 @@ $main-select-color: #00bfa5;
 
   &__add,
   &__fav {
-    transition: all .2s ease;
+    transition: all 0.2s ease;
     cursor: pointer;
 
     &:hover {
@@ -96,7 +107,7 @@ $main-select-color: #00bfa5;
     width: 50px;
     height: 50px;
     position: absolute;
-    transition: visibility 0s, opacity .2s linear;
+    transition: visibility 0s, opacity 0.2s linear;
     visibility: hidden;
     opacity: 0;
 

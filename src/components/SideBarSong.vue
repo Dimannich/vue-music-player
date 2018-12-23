@@ -1,65 +1,61 @@
 <template>
-    <li>
-        <div>
-          <div class="user align-items-center sidebar-song">
-            <div class="photo mt-2 sidebar-song__cover">
-                <img :src="song.cover" alt="cover">
-            </div>
-            <div class="user-info">
-                <span class="sidebar-song__name">
-                    SongName
-                </span>
-                <br>
-                <span class="sidebar-song__playlist">
-                    playlist
-                </span>
-            </div>
-          </div>
+  <li>
+    <div>
+      <div class="user align-items-center sidebar-song">
+        <div class="photo mt-2 sidebar-song__cover">
+          <img :src="song.cover" alt="cover">
         </div>
-    </li>
+        <div class="user-info">
+          <span class="sidebar-song__name">SongName</span>
+          <br>
+          <span class="sidebar-song__playlist">playlist</span>
+        </div>
+      </div>
+    </div>
+  </li>
 </template>
 <script>
 export default {
-  name: "sidebar-song",
+  name: 'sidebar-song',
   props: {
     song: {
       type: Object,
       default: () => {
-        return { };
-      }
+        return {};
+      },
     },
     color: {
       type: String,
-      default: "white"
+      default: 'white',
     },
     activeColor: {
       type: String,
-      default: "#00bfa5"
-    }
+      default: '#00bfa5',
+    },
   },
   data() {
     return {
-      hover: false
+      hover: false,
     };
   },
   computed: {
     baseComponent() {},
     isMenu() {},
-    isActive() {}
+    isActive() {},
   },
-  methods: {}
+  methods: {},
 };
 </script>
 <style lang="scss">
-  .sidebar-song {
-    &__playlist {
-      font-size: 13px;
-      opacity: .6;
-    }
+.sidebar-song {
+  &__playlist {
+    font-size: 13px;
+    opacity: 0.6;
   }
+}
 
-  // .user-info {
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  // }
+// .user-info {
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+// }
 </style>

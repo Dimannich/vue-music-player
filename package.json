@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prettier": "prettier --write \"src/**/*.{vue,js}\"",
+    "prettier:style": "prettier-stylelint --write \"src/**/*.{css,scss}\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
@@ -13,6 +15,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "bootstrap-vue": "^2.0.0-rc.11",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.16",
@@ -29,6 +33,13 @@
     "@vue/cli-plugin-eslint": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
     "axios": "^0.18.0",
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier-stylelint": "^0.4.2",
     "vue-cli-plugin-axios": "0.0.4",
     "vue-cli-plugin-bootstrap-vue": "^0.1.0",
     "vue-cli-plugin-route": "0.0.3",
@@ -41,6 +52,7 @@
     },
     "extends": [
       "plugin:vue/essential",
+      "plugin:prettier/recommended",
       "eslint:recommended"
     ],
     "rules": {},

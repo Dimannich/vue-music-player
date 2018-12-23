@@ -1,25 +1,32 @@
 <template>
-    <div :ref="refBlockName" class="w-100" @mousedown="OnMouseDown" @touchstart="OnTouchStart">                 
-        <div class="bar d-flex align-self-center" data-direction="horizontal" @click="changeValueOnClick" @mouseout="MouseLeave" @mouseover="MouseEnter" @mousewheel="MouseWheel">
-            <div class="bar__loaded" :style="{width: loadedValue + '%'}"></div>
-            <div class="bar__filled" :style="{width: value + '%'}">
-                <div class="pin" data-method="changeValueOnMove"></div>
-            </div>
-        </div>
+  <div :ref="refBlockName" class="w-100" @mousedown="OnMouseDown" @touchstart="OnTouchStart">
+    <div
+      class="bar d-flex align-self-center"
+      data-direction="horizontal"
+      @click="changeValueOnClick"
+      @mouseout="MouseLeave"
+      @mouseover="MouseEnter"
+      @mousewheel="MouseWheel"
+    >
+      <div class="bar__loaded" :style="{width: loadedValue + '%'}"></div>
+      <div class="bar__filled" :style="{width: value + '%'}">
+        <div class="pin" data-method="changeValueOnMove"></div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
-import Vue from "vue";
+import Vue from 'vue';
 
 export default {
-  name: "Bar",
+  name: 'Bar',
   props: {
     refBlockName: String,
     type: String,
     initialValue: 0,
     loaded: Number,
     wheelStep: {
-        default: 0.1
+      default: 0.1,
     },
     wheelActive: false,
   },
@@ -30,19 +37,16 @@ export default {
       currentlyDragged: null,
       loadedValue: this.loaded,
       wheelEnter: false,
-      draggableClasses: [
-        'pin',
-      ]
+      draggableClasses: ['pin'],
     };
   },
   watch: {
     initialValue: function(newValue) {
-      if (this.currentlyDragged === null || this.currentlyDragged === false)
-        this.value = this.initialValue;
+      if (this.currentlyDragged === null || this.currentlyDragged === false) this.value = this.initialValue;
     },
     loaded: function(newValue) {
       this.loadedValue = this.loaded;
-    }
+    },
   },
   methods: {
     // updateValue(value) {
@@ -50,13 +54,12 @@ export default {
     // },
     inRange(event) {
       let rangeBox = this.getRangeBox(event);
-      let screenOffset = this.$refs[this.refBlockName].getBoundingClientRect()
-        .x;
-      let min = screenOffset /*+ rangeBox.offsetLeft*/;
+      let screenOffset = this.$refs[this.refBlockName].getBoundingClientRect().x;
+      let min = screenOffset; /*+ rangeBox.offsetLeft*/
       let max = min + rangeBox.offsetWidth;
       let position;
       let value;
-      
+
       if (event.touches !== undefined) {
         position = event.touches[0].pageX;
       } else {
@@ -76,10 +79,10 @@ export default {
     getRangeBox(event) {
       let rangeBox = event.target;
       let el = this.currentlyDragged;
-      if (event.type === "click" && this.isDraggable(event.target)) {
+      if (event.type === 'click' && this.isDraggable(event.target)) {
         rangeBox = event.target.parentElement.parentElement;
       }
-      if (event.type === "mousemove" || event.type === "touchmove") {
+      if (event.type === 'mousemove' || event.type === 'touchmove') {
         rangeBox = el.parentElement.parentElement;
       }
       return rangeBox;
@@ -94,8 +97,7 @@ export default {
     },
     getCoefficient(event) {
       let rangeBox = this.getRangeBox(event);
-      let screenOffset = this.$refs[this.refBlockName].getBoundingClientRect()
-        .x; //document.querySelector("#volume").offsetLeft + 46;
+      let screenOffset = this.$refs[this.refBlockName].getBoundingClientRect().x; //document.querySelector("#volume").offsetLeft + 46;
       let K = 0;
       let offsetX;
       if (event.touches !== undefined) {
@@ -111,42 +113,45 @@ export default {
       if (this.inRange(event)) {
         this.coefficientValue = this.getCoefficient(event);
         let valuePercent = this.coefficientValue * 100;
-        valuePercent > 100 ? (valuePercent = 100) : "";
+        valuePercent > 100 ? (valuePercent = 100) : '';
         // this.updateValue(value);
-        if (this.type === "time") {
+        if (this.type === 'time') {
         } else {
-          this.$emit("volume-updated", this.coefficientValue);
+          this.$emit('volume-updated', this.coefficientValue);
         }
         this.value = valuePercent;
-        this.$emit("bar-drag", true);
+        this.$emit('bar-drag', true);
       }
     },
     changeValueOnClick() {
       this.changeValueOnMove(event);
-      if (this.type === "time") {
-        this.$emit("time-updated", this.coefficientValue);
+      if (this.type === 'time') {
+        this.$emit('time-updated', this.coefficientValue);
       }
     },
     changeValue() {
-      if (this.type === "time") {
-        this.$emit("time-updated", this.coefficientValue);
+      if (this.type === 'time') {
+        this.$emit('time-updated', this.coefficientValue);
       }
-      this.$emit("bar-drag", false);
+      this.$emit('bar-drag', false);
     },
     changeValueOnWheel(isIncreased) {
       if (this.type === 'volume') {
         if (isIncreased) {
-          this.coefficientValue + Number(this.wheelStep) > 1 ? this.coefficientValue = 1 : this.coefficientValue += Number(this.wheelStep);
-          
+          this.coefficientValue + Number(this.wheelStep) > 1
+            ? (this.coefficientValue = 1)
+            : (this.coefficientValue += Number(this.wheelStep));
         } else {
-          this.coefficientValue - Number(this.wheelStep) < 0 ? this.coefficientValue = 0 : this.coefficientValue -= Number(this.wheelStep);
+          this.coefficientValue - Number(this.wheelStep) < 0
+            ? (this.coefficientValue = 0)
+            : (this.coefficientValue -= Number(this.wheelStep));
         }
         console.log(this.coefficientValue);
         let valuePercent = this.coefficientValue * 100;
-        valuePercent > 100 ? (valuePercent = 100) : "";
+        valuePercent > 100 ? (valuePercent = 100) : '';
         this.value = valuePercent;
         console.log(this.value);
-        this.$emit("volume-updated", this.coefficientValue);
+        this.$emit('volume-updated', this.coefficientValue);
       }
     },
     OnMouseDown() {
@@ -156,14 +161,13 @@ export default {
       vue.currentlyDragged = event.target;
       let handleMethod = vue.currentlyDragged.dataset.method;
       console.log(handleMethod);
-      window.addEventListener("mousemove", vue[handleMethod], false);
+      window.addEventListener('mousemove', vue[handleMethod], false);
 
       window.onmouseup = function() {
-        if (vue.currentlyDragged !== false && vue.currentlyDragged !== null)
-          vue.changeValue();
+        if (vue.currentlyDragged !== false && vue.currentlyDragged !== null) vue.changeValue();
         vue.currentlyDragged = false;
         console.log(handleMethod);
-        window.removeEventListener("mousemove", vue[handleMethod], false);
+        window.removeEventListener('mousemove', vue[handleMethod], false);
       };
     },
     MouseEnter() {
@@ -190,26 +194,23 @@ export default {
       vue.currentlyDragged = event.target;
       let handleMethod = vue.currentlyDragged.dataset.method;
 
-      window.addEventListener("touchmove", vue[handleMethod], false);
+      window.addEventListener('touchmove', vue[handleMethod], false);
       window.ontouchend = function() {
-        if (vue.currentlyDragged !== false && vue.currentlyDragged !== null)
-          vue.changeValue();
+        if (vue.currentlyDragged !== false && vue.currentlyDragged !== null) vue.changeValue();
         vue.currentlyDragged = false;
-        window.removeEventListener("touchmove", vue[handleMethod], false);
+        window.removeEventListener('touchmove', vue[handleMethod], false);
       };
-    }
+    },
   },
   created() {
     // let vue = this;
     // this.updateValue(this.value);
     // this.addEventListener("mousedown", function(event) {
     //   if (!vue.isDraggable(event.target)) return false;
-
     //   vue.currentlyDragged = event.target;
     //   let handleMethod = vue.currentlyDragged.dataset.method;
     //   console.log(handleMethod);
     //   this.addEventListener("mousemove", vue[handleMethod], false);
-
     //   window.onmouseup = function() {
     //     if (vue.currentlyDragged !== false && vue.currentlyDragged !== null)
     //       vue.changeValue();
@@ -218,13 +219,10 @@ export default {
     //     window.removeEventListener("mousemove", vue[handleMethod], false);
     //   };
     // });
-
     // window.addEventListener("touchstart", function(event) {
     //   if (!vue.isDraggable(event.target)) return false;
-
     //   vue.currentlyDragged = event.target;
     //   let handleMethod = vue.currentlyDragged.dataset.method;
-
     //   this.addEventListener("touchmove", vue[handleMethod], false);
     //   window.ontouchend = function() {
     //     if (vue.currentlyDragged !== false && vue.currentlyDragged !== null)
@@ -233,12 +231,11 @@ export default {
     //     window.removeEventListener("touchmove", vue[handleMethod], false);
     //   };
     // });
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .bar {
   height: 4px;
 
@@ -291,4 +288,3 @@ export default {
   }
 }
 </style>
-

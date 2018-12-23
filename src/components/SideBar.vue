@@ -6,11 +6,12 @@
           <img :src="logo" alt="logo">
         </div>
       </a>
-      <a href="#" class="simple-text logo-normal text-left" target="_blank">
-        {{title}}
-      </a>
+      <a href="#" class="simple-text logo-normal text-left" target="_blank">{{title}}</a>
       <div class="navbar-minimize">
-        <button class="md-button md-round md-just-icon md-transparent md-theme-default" @click="minimizeSidebar">
+        <button
+          class="md-button md-round md-just-icon md-transparent md-theme-default"
+          @click="minimizeSidebar"
+        >
           <div class="md-ripple">
             <div class="md-button-content">
               <fa-icon icon="ellipsis-v" class="visible-on-sidebar-regular"></fa-icon>
@@ -23,16 +24,14 @@
     <div class="sidebar-wrapper text-left">
       <ul class="pl-0 md-list nav">
         <slot name="general">
-          <sidebar-item v-for="(link, index) in sidebarLinks"
-                        :key="link.name + index"
-                        :link="link">
-          </sidebar-item>
+          <sidebar-item v-for="(link, index) in sidebarLinks" :key="link.name + index" :link="link"></sidebar-item>
         </slot>
         <slot name="songs">
-          <sidebar-song v-for="(song, index) in recentlyPlayed"
-                        :key="song.name + index"
-                        :song="song">
-          </sidebar-song>
+          <sidebar-song
+            v-for="(song, index) in recentlyPlayed"
+            :key="song.name + index"
+            :song="song"
+          ></sidebar-song>
         </slot>
         <slot name="profile">
           <div class="delimetr"></div>
@@ -40,104 +39,99 @@
             <div class="photo">
               <img :src="logo" alt="avatar">
             </div>
-            <div class="user-info">
-                profile
-            </div>
+            <div class="user-info">profile</div>
           </div>
-          <sidebar-item v-for="(link, index) in profileLinks"
-                        :key="link.name + index"
-                        :link="link">
-          </sidebar-item>
+          <sidebar-item v-for="(link, index) in profileLinks" :key="link.name + index" :link="link"></sidebar-item>
         </slot>
       </ul>
     </div>
   </div>
 </template>
 <script>
-import logo from "@/assets/img/test-logo.png";
+import logo from '@/assets/img/test-logo.png';
 
 export default {
-  name: "sidebar",
+  name: 'sidebar',
   props: {
     title: {
       type: String,
-      default: "Impuls"
+      default: 'Impuls',
     },
     activeColor: {
       type: String,
-      default: "white"
+      default: 'white',
     },
     backgroundColor: {
       type: String,
-      default: "#393f54"
+      default: '#393f54',
     },
     logo: {
       type: String,
-      default: logo
+      default: logo,
     },
     sidebarLinks: {
       type: Array,
       default: () => [
         {
-          path: "/fetch-data",
-          name: "Поиск",
-          icon: "search"
+          path: '/fetch-data',
+          name: 'Поиск',
+          icon: 'search',
         },
         {
-          path: "/",
-          name: "My music",
-          icon: "th"
+          path: '/',
+          name: 'My music',
+          icon: 'th',
         },
         {
-          path: "/123",
-          name: "News",
-          icon: "fire"
-        }
-      ]
+          path: '/123',
+          name: 'News',
+          icon: 'fire',
+        },
+      ],
     },
     profileLinks: {
       type: Array,
       default: () => [
         {
-          path: "/settings",
-          name: "Настройки",
-          icon: "cog"
+          path: '/settings',
+          name: 'Настройки',
+          icon: 'cog',
         },
         {
-          path: "/logout",
-          name: "Выйти",
-          icon: "sign-out-alt"
-        }
-      ]
+          path: '/logout',
+          name: 'Выйти',
+          icon: 'sign-out-alt',
+        },
+      ],
     },
     recentlyPlayed: {
       type: Array,
       default: () => [
         {
-          name: "",
-          playlist: "",
-          cover: logo
+          name: '',
+          playlist: '',
+          cover: logo,
         },
         {
-          name: "",
-          playlist: "",
-          cover: logo
-        }
-      ]
-    }
+          name: '',
+          playlist: '',
+          cover: logo,
+        },
+      ],
+    },
   },
   methods: {
     minimizeSidebar() {
       if (this.$sidebar) {
         this.$sidebar.toggleMinimize();
       }
-    }
+    },
   },
   beforeDestroy() {
     if (this.$sidebar.showSidebar) {
       this.$sidebar.showSidebar = false;
     }
-  }
+  },
 };
 </script>
 <style lang="scss">
@@ -170,7 +164,7 @@ export default {
     &::before {
       background-color: rgba(180, 180, 180, 0.3);
       top: 0;
-      content: "";
+      content: '';
       height: 1px;
       position: absolute;
       right: 15px;

@@ -1,15 +1,15 @@
-import Sidebar from './SideBar.vue'
-import SidebarItem from './SideBarItem.vue'
-import SidebarSong from './SideBarSong.vue'
+import Sidebar from './SideBar.vue';
+import SidebarItem from './SideBarItem.vue';
+import SidebarSong from './SideBarSong.vue';
 
 const SidebarStore = {
   showSidebar: false,
   sidebarLinks: [],
   isMinimized: false,
-  displaySidebar (value) {
-    this.showSidebar = value
+  displaySidebar(value) {
+    this.showSidebar = value;
   },
-  toggleMinimize () {
+  toggleMinimize() {
     document.body.classList.toggle('sidebar-mini');
     // const simulateWindowResize = setInterval(() => {
     //   window.dispatchEvent(new Event('resize'))
@@ -19,33 +19,32 @@ const SidebarStore = {
     //   clearInterval(simulateWindowResize)
     // }, 1000);
 
-    this.isMinimized = !this.isMinimized
-  }
+    this.isMinimized = !this.isMinimized;
+  },
 };
 
 const SidebarPlugin = {
-
-  install (Vue, options) {
+  install(Vue, options) {
     if (options && options.sidebarLinks) {
-      SidebarStore.sidebarLinks = options.sidebarLinks
+      SidebarStore.sidebarLinks = options.sidebarLinks;
     }
     Vue.mixin({
-      data () {
+      data() {
         return {
-          sidebarStore: SidebarStore
-        }
-      }
+          sidebarStore: SidebarStore,
+        };
+      },
     });
 
     Object.defineProperty(Vue.prototype, '$sidebar', {
-      get () {
-        return this.$root.sidebarStore
-      }
+      get() {
+        return this.$root.sidebarStore;
+      },
     });
     Vue.component('side-bar', Sidebar);
     Vue.component('sidebar-item', SidebarItem);
     Vue.component('sidebar-song', SidebarSong);
-  }
+  },
 };
 
-export default SidebarPlugin
+export default SidebarPlugin;

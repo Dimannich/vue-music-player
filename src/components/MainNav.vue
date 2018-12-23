@@ -1,43 +1,43 @@
 <template>
-    <div class="main-nav">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" @click="toggleCollapsed">
-                <span class="navbar-toggler-icon"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <router-link class="navbar-brand" to="/">Vue.js</router-link>
+  <div class="main-nav">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" @click="toggleCollapsed">
+        <span class="navbar-toggler-icon"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <router-link class="navbar-brand" to="/">Vue.js</router-link>
 
-                <div :class="'collapse navbar-collapse' + (!collapsed ? ' show':'')" v-show="!collapsed">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item" v-for="(route, index) in routes" :key="index">
-                            <router-link :to="route.path" exact-active-class="active">
-                                <span>{{ route.display }}</span> 
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
-        </nav>
-    </div>
+      <div :class="'collapse navbar-collapse' + (!collapsed ? ' show':'')" v-show="!collapsed">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" v-for="(route, index) in routes" :key="index">
+            <router-link :to="route.path" exact-active-class="active">
+              <span>{{ route.display }}</span>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
-import routes from '../router/routes'
+import routes from '../router/routes';
 
 export default {
-  name: "MainNav",
+  name: 'MainNav',
   data() {
     return {
       routes,
-      collapsed: true
+      collapsed: true,
     };
   },
   methods: {
     toggleCollapsed: function(event) {
       this.collapsed = !this.collapsed;
-    }
-  }
+    },
+  },
 };
 </script>
 
