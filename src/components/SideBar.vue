@@ -83,7 +83,7 @@ export default {
           icon: 'th',
         },
         {
-          path: '/123',
+          path: '/albums',
           name: 'News',
           icon: 'fire',
         },

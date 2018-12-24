@@ -20,7 +20,6 @@ import {
   faGripVertical,
   faHeart,
   faFire,
-  faTable,
   faSearch,
   faTh,
   faCog,
@@ -33,6 +32,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import store from './store';
 import SideBar from './components/sidebar-plugin';
 import 'vue-material/dist/vue-material.min.css';
+import Grid from 'vue-js-grid';
 
 library.add(
   faThList,
