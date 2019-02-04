@@ -48,11 +48,6 @@
           <div class="mb-auto align-items-center d-flex">
             <span class="mr-2 song-time">{{ currentTime }}</span>
             <span class="ml-2 order-last song-time">{{ currentSong.totalTime}}</span>
-            <!-- <div class="align-self-center slider"  @click="changeTime" style="height: 4px;" data-direction="horizontal">
-                                <div ref="time" class="progress">
-                                    <div class="pin" style="width:10px; height:10px;" id="progress-pin" data-method="rewind"></div>
-                                </div>
-            </div>-->
             <bar
               refBlockName="timebar"
               type="time"
@@ -74,14 +69,6 @@
             @volume-updated="captureVolume"
             @bar-drag="setNoSelection"
           ></bar>
-          <!-- <div ref="volumeBlock" id="volume" class="mt-0">
-                           
-                            <div ref="line" class="line d-flex align-self-center" @click="changeVolume" style="height: 4px; max-width:126px;" data-direction="horizontal">
-                                <div class="volume" ref="volume">
-                                    <div class="vol" style="width:10px; height:10px;" id="volume-pin" data-method="changeVolume"></div>
-                                </div>
-                            </div>
-          </div>-->
         </div>
       </div>
     </div>
@@ -92,15 +79,6 @@
 import Vue from 'vue';
 import Bar from './player/Bar.vue';
 let player;
-// let volume;
-// let time;
-
-// let newtime = 0;
-// let draggableClasses = ['pin', 'vol'];
-//let currentlyDragged = null;
-// var currentTime = document.querySelector('#current-time');
-// var totalTime = document.querySelector('#total-time');
-// var volumebtn = document.querySelector('#vol-btn');
 
 export default {
   components: {
@@ -119,51 +97,6 @@ export default {
 
   data() {
     return {
-      // {
-      //     cover:"https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/perception-album-cover.png",
-      //     src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/NF%20-%20Let%20You%20Down.mp3',
-      //     title: "Let You Down",
-      //     artist: "NF",
-      //     totalTime: '3:31'
-      // }
-      songs: [
-        {
-          title: 'rockstar',
-          artist: 'Post Malone, 21 Savage',
-          cover: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/rockstar-album-cover.jpg',
-          src:
-            'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/Post%20Malone%20-%20rockstar%20ft.%2021%20Savage%20(1).mp3',
-          totalTime: '0:00',
-        },
-        {
-          title: 'Let You Down',
-          artist: 'NF',
-          cover: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/perception-album-cover.png',
-          src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/NF%20-%20Let%20You%20Down.mp3',
-          totalTime: '0:00',
-        },
-        {
-          title: 'Silence',
-          artist: 'Marshmello, Khalid',
-          cover: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/silence-album-cover.jpg',
-          src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/Marshmello%20-%20Silence%20ft.%20Khalid.mp3',
-          totalTime: '0:00',
-        },
-        {
-          title: 'I Fall Apart',
-          artist: 'Post Malone',
-          cover: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/stoney-cover-album.jpg',
-          src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/Post%20Malone%20-%20I%20Fall%20Apart.mp3',
-          totalTime: '0:00',
-        },
-        {
-          title: 'Fireproof',
-          artist: 'VAX, Teddy Sky',
-          cover: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/fireproof-album-cover.jpeg',
-          src: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/308622/VAX%20-%20Fireproof%20Feat%20Teddy%20Sky.mp3',
-          totalTime: '0:00',
-        },
-      ],
       currentlyDragged: null,
       played: false,
       currentTime: '--:--',
@@ -173,14 +106,33 @@ export default {
       songLoadedProgress: 0,
       repeat: false,
       random: false,
-      songIndex: 0,
     };
   },
   computed: {
     currentSong: function() {
       let song = this.songs[this.songIndex];
+      console.log(song);
       console.log(this.songs.indexOf(song));
       return song;
+    },
+    songs() {
+      return this.$store.getters.activeSongList;
+      //return this.$store.state.recentlyPlayedSongs;
+    },
+    songIndex: {
+      get() {
+        const songIndex = this.$store.getters.songIndex;
+        console.log(songIndex);
+        return this.$store.getters.songIndex;
+      },
+      set(newIndex) {
+        this.$store.commit('setIndex', newIndex);
+      },
+    },
+  },
+  watch: {
+    currentSong() {
+      this.loadSong();
     },
   },
   methods: {
@@ -200,9 +152,6 @@ export default {
       } else {
         this.setNextSongIndex(isNext);
       }
-
-      //this.currentTime = 0;
-      this.loadSong();
     },
     setNextSongIndex(isNext) {
       if (isNext) {

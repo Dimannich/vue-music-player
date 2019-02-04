@@ -16,13 +16,15 @@ export default {
   },
 
   methods: {
-    getWindowSize() {
+    getWindowSize(offset = 0) {
+      /* #TODO for debug purpose, remove */
+      offset = 260;
       console.log(document.getElementsByClassName('main-panel'));
       this.windowHeight = window.innerHeight;
       this.windowWidth =
         document.getElementsByClassName('main-panel')[0] !== undefined
           ? document.getElementsByClassName('main-panel')[0].offsetWidth
-          : window.innerWidth - 260;
+          : window.innerWidth - offset;
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar" :style="{ background: backgroundColor}">
-    <div class="logo">
+    <div class="logo pb-0">
       <a href="#" class="simple-text logo-mini" target="_blank">
         <div class="logo-img">
           <img :src="logo" alt="logo">
@@ -9,7 +9,7 @@
       <a href="#" class="simple-text logo-normal text-left" target="_blank">{{title}}</a>
       <div class="navbar-minimize">
         <button
-          class="md-button md-round md-just-icon md-transparent md-theme-default"
+          class="md-button md-round md-just-icon md-transparent md-theme-default text-white"
           @click="minimizeSidebar"
         >
           <div class="md-ripple">
@@ -21,32 +21,61 @@
         </button>
       </div>
     </div>
+    <hr class="delimetr">
     <div class="sidebar-wrapper text-left">
-      <ul class="pl-0 md-list nav">
-        <slot name="general">
-          <sidebar-item v-for="(link, index) in sidebarLinks" :key="link.name + index" :link="link"></sidebar-item>
-        </slot>
-        <slot name="songs">
-          <sidebar-song
-            v-for="(song, index) in recentlyPlayed"
-            :key="song.name + index"
-            :song="song"
-          ></sidebar-song>
-        </slot>
-        <slot name="profile">
-          <div class="delimetr"></div>
-          <div class="user">
-            <div class="photo">
-              <img :src="logo" alt="avatar">
-            </div>
-            <div class="user-info">profile</div>
-          </div>
-          <sidebar-item v-for="(link, index) in profileLinks" :key="link.name + index" :link="link"></sidebar-item>
-        </slot>
+      <ul class="pl-0 md-list nav mt-0 h-100">
+        <li>
+          <slot name="general">
+            <ul class="pl-0">
+              <sidebar-item
+                v-for="(link, index) in sidebarLinks"
+                :key="link.name + index"
+                :link="link"
+              ></sidebar-item>
+            </ul>
+          </slot>
+        </li>
+        <li>
+          <hr class="delimetr">
+        </li>
+        <li class="recent-songs">
+          <slot name="songs">
+            <ul class="pl-0 d-flex flex-column" style="overflow-y: auto; overflow-x: hidden">
+              <sidebar-song
+                v-for="(song, index) in recentlyPlayed"
+                :key="song.title + index"
+                :song="song"
+              ></sidebar-song>
+            </ul>
+          </slot>
+        </li>
+        <li>
+          <hr class="delimetr">
+        </li>
+        <li>
+          <slot name="profile">
+            <ul class="pl-0 profile-nav">
+              <li>
+                <div class="user">
+                  <div class="photo">
+                    <img src="../assets/img/music65.png" alt="avatar">
+                  </div>
+                  <div class="user-info">user name</div>
+                </div>
+              </li>
+              <sidebar-item
+                v-for="(link, index) in profileLinks"
+                :key="link.name + index"
+                :link="link"
+              ></sidebar-item>
+            </ul>
+          </slot>
+        </li>
       </ul>
     </div>
   </div>
 </template>
+
 <script>
 import logo from '@/assets/img/test-logo.png';
 
@@ -74,7 +103,7 @@ export default {
       default: () => [
         {
           path: '/fetch-data',
-          name: 'Поиск',
+          name: 'Search',
           icon: 'search',
         },
         {
@@ -94,30 +123,20 @@ export default {
       default: () => [
         {
           path: '/settings',
-          name: 'Настройки',
+          name: 'Settings',
           icon: 'cog',
         },
         {
           path: '/logout',
-          name: 'Выйти',
+          name: 'Log out',
           icon: 'sign-out-alt',
         },
       ],
     },
-    recentlyPlayed: {
-      type: Array,
-      default: () => [
-        {
-          name: '',
-          playlist: '',
-          cover: logo,
-        },
-        {
-          name: '',
-          playlist: '',
-          cover: logo,
-        },
-      ],
+  },
+  computed: {
+    recentlyPlayed() {
+      return this.$store.state.recentlyPlayedSongs;
     },
   },
   methods: {
@@ -134,8 +153,28 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
+.logo {
+  &:after {
+    content: unset !important;
+  }
+}
+
+.recent-songs {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 1 100%;
+  overflow: hidden;
+}
+
 @media (min-width: 992px) {
+  .profile-nav {
+    max-height: 210px;
+    margin-top: auto;
+  }
+
   .navbar-search-form-mobile,
   .nav-mobile-menu {
     display: none;
@@ -147,7 +186,8 @@ export default {
     z-index: 1020;
 
     .sidebar-wrapper {
-      height: calc(100vh - 130px);
+      height: calc(100vh - 175px);
+      overflow: unset;
     }
   }
 
@@ -156,20 +196,8 @@ export default {
   }
 
   .delimetr {
-    display: block;
-    margin: 0;
-    padding-bottom: 1rem;
-    position: relative;
-    z-index: 4;
-    &::before {
-      background-color: rgba(180, 180, 180, 0.3);
-      top: 0;
-      content: '';
-      height: 1px;
-      position: absolute;
-      right: 15px;
-      width: calc(100% - 30px);
-    }
+    width: calc(100% - 30px);
+    border-color: rgba(180, 180, 180, 0.3);
   }
 
   .sidebar-mini .sidebar .user .user-info {
@@ -185,7 +213,7 @@ export default {
   }
 
   .sidebar-mini .sidebar-wrapper {
-    overflow-x: hidden;
+    // overflow-x: hidden;
   }
 
   .sidebar .user {
